@@ -15,7 +15,15 @@ jobs:
 
     - name: Install SSH client
       run: sudo apt-get install openssh-client -y
-    
+
+      
+    - name: Debug SSH key
+      run: |
+        echo "${{ secrets.EC2_KEY }}" > ~/.ssh/id_rsa
+        chmod 600 ~/.ssh/id_rsa
+        ls -la ~/.ssh
+        cat ~/.ssh/id_rsa
+
     - name: Deploy to EC2
       uses: appleboy/ssh-action@v0.1.5
       with:

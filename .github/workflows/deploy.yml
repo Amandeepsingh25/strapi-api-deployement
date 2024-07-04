@@ -30,8 +30,7 @@ jobs:
 
       - name: Copy Strapi files to EC2
         run: |
-          mkdir -p ~/.ssh
-          scp -o StrictHostKeyChecking=no -i ~/.ssh/id_rsa -r ./strapi-api-deployement/aman-strapi-project ${{ secrets.EC2_USER }}@${{ secrets.EC2_HOST }}:/home/${{ secrets.EC2_USER }}/strapi-app/
+          scp -o StrictHostKeyChecking=no -i ~/.ssh/id_rsa -r ./strapi-api-deployement/aman-strapi-project ${{ secrets.EC2_USER }}@${{ secrets.EC2_HOST }}:/home/${{ secrets.EC2_USER }}/
 
       - name: Deploy Strapi on EC2
         uses: appleboy/ssh-action@v0.1.6
@@ -40,5 +39,5 @@ jobs:
           username: ${{ secrets.EC2_USER }}
           key: ${{ secrets.EC2_SSH_KEY }}
           script: |
-            chmod +x /home/${{ secrets.EC2_USER }}/strapi-app/aman-strapi-project/deploy-strapi.sh
-            /home/${{ secrets.EC2_USER }}/strapi-app/aman-strapi-project/deploy-strapi.sh
+            chmod +x /home/${{ secrets.EC2_USER }}/aman-strapi-project/deploy-strapi.sh
+            /home/${{ secrets.EC2_USER }}/aman-strapi-project/deploy-strapi.sh

@@ -14,7 +14,7 @@ nvm use 18
 npm install -g pm2
 
 # Navigate to the Strapi project directory
-cd /home/${{ secrets.EC2_USER }}/strapi-app
+cd /home/${EC2_USER}/strapi-app 
 
 # Install project dependencies
 npm install

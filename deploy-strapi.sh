@@ -1,19 +1,32 @@
 #!/bin/bash
 
-# Navigate to the project directory
-cd /home/ubuntu/strapi-project
+# Update system
+sudo apt update -y
 
-# Stop the existing Strapi instance
-pm2 stop strapi || true
+# Install Node.js and npm using nvm
+curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.39.7/install.sh | bash
+export NVM_DIR="$HOME/.nvm"
+source "$NVM_DIR/nvm.sh"
+nvm install 18
+nvm use 18
 
-# Pull the latest code from the repository
-git pull origin main
+# Install pm2 globally
+npm install -g pm2
 
-# Install dependencies
+# Navigate to the Strapi project directory
+cd /home/${{ secrets.EC2_USER }}/strapi-app/aman-strapi-project
+
+# Install project dependencies
 npm install
 
-# Build the project
+# Build the Strapi project
 npm run build
 
-# Start the Strapi server with PM2
-pm2 start npm --name strapi -- start
+# Start the Strapi application with pm2
+pm2 start npm --name "strapi-app" -- run start
+
+# Save the pm2 process list
+pm2 save
+
+# Setup pm2 to start on boot
+pm2 startup
